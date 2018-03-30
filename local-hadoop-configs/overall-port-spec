@@ -1,0 +1,10 @@
+Assigned port range: 49100-49199
+
+HDFS
+  Namenodes: 49110-49119
+    Primary name-node: harrisburg.cs.colostate.edu
+    Secondary name-node: frankfort.cs.colostate.edu
+  Datanodes: 49120-49129 (includes shuffle)
+Yarn
+  General: 49130-49139
+  Scheduler/Tracker host: hartford.cs.colostate.edu
