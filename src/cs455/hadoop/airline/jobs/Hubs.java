@@ -21,7 +21,6 @@ public class Hubs {
 
   Hubs(String input, String output)
       throws IOException, InterruptedException, ClassNotFoundException {
-    // TODO Consider using the ChainReducer
     // JOB 1 ----------------------------------------------------------
     // Maps hub to frequency of occurrence
     Configuration conf = new Configuration();

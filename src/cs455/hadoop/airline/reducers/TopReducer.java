@@ -8,6 +8,11 @@ import java.io.IOException;
 import java.util.*;
 
 public class TopReducer extends Reducer<Text, TopWritable, Text, Text> {
+  /**
+   * Place all values into a nice map
+   * @param values
+   * @return map storing all the iterated values
+   */
   private TreeMap<String, Integer> parseHubs(Iterable<TopWritable> values) {
     TreeMap<String, Integer> map = new TreeMap<>();
     for(TopWritable value: values) {
@@ -19,6 +24,12 @@ public class TopReducer extends Reducer<Text, TopWritable, Text, Text> {
     return map;
   }
 
+  /**
+   * Flatten the map into a sorted TreeSet then return the first {@bound bound} elements.
+   * @param map
+   * @param bound
+   * @return Top n elements in an ArrayList
+   */
   private ArrayList<String> busiest(TreeMap<String, Integer> map, int bound) {
     TreeSet<Map.Entry<String, Integer>> sorted = new TreeSet<>(
       new Comparator<Map.Entry<String, Integer>>() {
