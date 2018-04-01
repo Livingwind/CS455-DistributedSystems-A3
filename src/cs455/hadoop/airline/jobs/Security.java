@@ -16,10 +16,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Security {
-  private Configuration conf = new Configuration();
-  private ArrayList<Job> jobChain = new ArrayList<>();
-
+public class Security extends AirlineJob {
   public Security(String input, String output)
       throws IOException, InterruptedException, ClassNotFoundException {
     Path inpath = new Path(input);
@@ -41,13 +38,6 @@ public class Security {
     job1.setOutputValueClass(Text.class);
 
     jobChain.add(job1);
-  }
-
-  public void run()
-      throws IOException, InterruptedException, ClassNotFoundException {
-    for(Job job: jobChain) {
-      job.waitForCompletion(true);
-    }
   }
 
   public static void main(String[] args) {

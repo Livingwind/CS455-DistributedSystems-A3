@@ -6,6 +6,7 @@ import cs455.hadoop.airline.mappers.CarrierMapper;
 import cs455.hadoop.airline.mappers.CarrierSuppMapper;
 import cs455.hadoop.airline.reducers.CarrierReducer;
 import cs455.hadoop.airline.utils.CarrierWritable;
+import cs455.hadoop.airline.utils.HadoopUtils;
 import cs455.hadoop.airline.utils.MeanWritable;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -19,31 +20,19 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.io.IOException;
 
-public class Carriers {
+public class Carriers extends AirlineJob {
   private static final String tmpDir = "/tmp/carriers";
-  private Configuration conf;
-  private Job job1;
-  private Job job2;
 
   public Carriers(String input, String output)
       throws IOException, InterruptedException, ClassNotFoundException {
-    conf = new Configuration();
     Path inpath = new Path(input);
-    Path outpath = new Path(output);
-    Path tmppath = new Path(tmpDir);
     Path supCarrierData = new Path("/data/supplementary/carriers.csv");
-
-    FileSystem fs = FileSystem.get(conf);
-    if(fs.exists(outpath)) {
-      fs.delete(outpath, true);
-    }
-    if(fs.exists(tmppath)) {
-      fs.delete(tmppath, true);
-    }
+    Path outpath = HadoopUtils.clearPath(conf, output);
+    Path tmppath = HadoopUtils.clearPath(conf, tmpDir);
 
     // JOB 1 ----------------------------------------------------------
     // Maps carrier codes to delay information
-    job1 = Job.getInstance(conf, "Carriers Intermediate");
+    Job job1 = Job.getInstance(conf, "Carriers Intermediate");
     job1.setJarByClass(Carriers.class);
 
     job1.setMapperClass(CarrierMapper.class);
@@ -55,9 +44,10 @@ public class Carriers {
     FileInputFormat.addInputPath(job1, inpath);
     FileOutputFormat.setOutputPath(job1, tmppath);
 
+    jobChain.add(job1);
     // JOB 2 -----------------------------------------------------------
     // Combines the results of JOB 1 with the supplementary carrier data
-    job2 = Job.getInstance(conf, "Carriers");
+    Job job2 = Job.getInstance(conf, "Carriers");
     job2.setJarByClass(Carriers.class);
 
     MultipleInputs.addInputPath(job2, supCarrierData, TextInputFormat.class, CarrierSuppMapper.class);
@@ -69,11 +59,7 @@ public class Carriers {
     job2.setOutputValueClass(Text.class);
 
     FileOutputFormat.setOutputPath(job2, outpath);
-  }
-
-  public void run() throws IOException, InterruptedException, ClassNotFoundException {
-    job1.waitForCompletion(true);
-    job2.waitForCompletion(true);
+    jobChain.add(job2);
   }
 
   public static void main(String[] args) {

@@ -8,7 +8,6 @@ import cs455.hadoop.airline.reducers.WeatherReducer;
 import cs455.hadoop.airline.reducers.WeatherTopReducer;
 import cs455.hadoop.airline.utils.HadoopUtils;
 import cs455.hadoop.airline.utils.WeatherWritable;
-import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
@@ -18,13 +17,10 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-public class Weather {
+public class Weather extends AirlineJob {
   private static final String tmpDir = "/tmp/weather";
   private static final String suppDir = "/data/supplementary/airports.csv";
-  private Configuration conf = new Configuration();
-  ArrayList<Job> jobChain = new ArrayList<>();
 
   public Weather(String input, String output)
       throws IOException, InterruptedException, ClassNotFoundException {
@@ -62,13 +58,6 @@ public class Weather {
     job2.setMapOutputKeyClass(Text.class);
 
     jobChain.add(job2);
-  }
-
-  public void run()
-      throws IOException, InterruptedException, ClassNotFoundException {
-    for(Job job: jobChain) {
-      job.waitForCompletion(true);
-    }
   }
 
   public static void main(String[] args) {

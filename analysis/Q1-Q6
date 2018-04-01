@@ -1,0 +1,21 @@
+Q1/Q2:
+  Best ToD: 5AM (8.98 min)  Worst ToD: 7PM (30.9 min)
+  Best DoTW: Sat (17.16 min) Worst ToD: Fri (24.29 min)
+  Best ToY: September (14.82 min) Worst ToY: December (26.30 min)
+
+Q3: (Busiest) ATL ORD DFW DEN LAX PHX IAH LAS DTW SFO (Less Busy) in 2008
+  Atlanta, Chicago, and Dallas airports remain the in the top 3 since 1987.
+  Denver left the top 5 in the 90's but rose back in the 00's
+
+Q4: Mesa Airlines (YV), Pinnacle Airlines(9E), and Atlantic Southeast Airlines(EV) are the top 3 airlines by delay.
+  YV- Num Delayed: 91314  Minutes Lost: 5519911  Mean: 60.45
+  9E- Num Delayed: 35239  Minutes Lost: 2036201  Mean: 57.78
+  EV- Num Delayed: 197923 Minutes Lost: 9593520  Mean: 48.47
+
+Q5: There doesn't seem to be a difference in delays between new (50.35 min) and old (51.82 min) planes.
+
+Q6: The top 10 cities with the highest weather delays:
+    1.Cheyenne(122.0) 2.Scottsbluff(93.0) 3.Ogden(78.67) 4.Farmington(64.33) 5.Pinehurst/Southern Pines(3.93)
+    6.Marathon(3.09) 7.Aspen(2.94) 8.Twin Falls(2.25) 9.New Bern(2.25) 10.Gillette(2.22)
+
+Q7: See the AirportSecurityAnalysis.ods spreadsheet

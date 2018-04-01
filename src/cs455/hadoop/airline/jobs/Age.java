@@ -24,11 +24,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Age{
+public class Age extends AirlineJob {
   private static final String tmpDir = "/tmp/age";
   private static final String suppDir = "/data/supplementary/plane-data.csv";
-  private Configuration conf;
-  private List<Job> jobChain = new ArrayList<>();
 
   public Age(String input, String output)
       throws IOException, InterruptedException, ClassNotFoundException {
@@ -69,13 +67,6 @@ public class Age{
     job2.setOutputValueClass(Text.class);
 
     jobChain.add(job2);
-  }
-
-  public void run()
-      throws IOException, InterruptedException, ClassNotFoundException {
-    for(Job j: jobChain) {
-      j.waitForCompletion(true);
-    }
   }
 
   public static void main(String[] args) {

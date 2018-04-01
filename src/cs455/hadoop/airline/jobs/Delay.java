@@ -18,12 +18,9 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import java.io.IOException;
 import java.util.TreeMap;
 
-public class Delay {
-  private final Job job;
-
+public class Delay extends AirlineJob {
   Delay(String input, String output) throws IOException {
-    Configuration conf = new Configuration();
-    job = Job.getInstance(conf, "Delay");
+    Job job = Job.getInstance(conf, "Delay");
     job.setJarByClass(Delay.class);
 
     job.setMapperClass(DelayMapper.class);
@@ -36,12 +33,14 @@ public class Delay {
 
     FileInputFormat.addInputPath(job, new Path(input));
     FileOutputFormat.setOutputPath(job, HadoopUtils.clearPath(conf, output));
+
+    jobChain.add(job);
   }
 
   public static void main(String[] args) {
     try {
       Delay tod = new Delay(args[0], args[1]);
-      tod.job.waitForCompletion(true);
+      tod.run();
     } catch (IOException ioe) {
       ioe.printStackTrace();
     } catch (InterruptedException ie) {
