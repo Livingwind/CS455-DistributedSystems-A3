@@ -18,7 +18,7 @@ public class AgeMapper extends Mapper<LongWritable, Text, Text, AgeWritable> {
     int year = Integer.parseInt(entries[0]);
     String tailnum = entries[10];
     long delays = Long.parseLong(entries[14]) + Long.parseLong(entries[15]);
-    if(delays == 0) {
+    if(delays <= 0) {
       return;
     }
 

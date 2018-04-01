@@ -1,5 +1,7 @@
 package cs455.hadoop.airline.utils;
 
+import cs455.hadoop.airline.enums.Day;
+import cs455.hadoop.airline.enums.Month;
 import org.apache.hadoop.io.WritableComparable;
 import org.apache.hadoop.io.WritableUtils;
 
@@ -57,6 +59,11 @@ public class DelayCompositeKey implements WritableComparable<DelayCompositeKey> 
 
   @Override
   public String toString() {
-    return type + ":" + partition;
+    switch(type) {
+      case TIME: return "Time: " + partition;
+      case DAY: return "DoTW: " + Day.value(partition);
+      case MONTH: return "Month: " + Month.value(partition);
+      default: return null;
+    }
   }
 }

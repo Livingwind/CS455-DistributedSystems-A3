@@ -20,6 +20,7 @@ public class HadoopUtils {
     FileSystem fs = FileSystem.get(conf);
     if(fs.exists(tmpPath)) {
       fs.delete(tmpPath, true);
+      System.out.println("INFO: Cleared path " + path + " in the DFS.");
     }
     return tmpPath;
   }

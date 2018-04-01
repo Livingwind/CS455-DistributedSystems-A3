@@ -12,11 +12,12 @@ public class CarrierMapper extends Mapper<LongWritable, Text, Text, MeanWritable
   protected void map(LongWritable key, Text value, Context context)
       throws IOException, InterruptedException {
     String[] entries = value.toString().split(",");
-    if(entries[0].equals("Year") || entries[14].equals("NA") || entries[15].equals("NA"))
+    if(entries[0].equals("Year") || entries[24].equals("NA"))
       return;
 
     String carrier = entries[8];
-    long delays = Long.parseLong(entries[14]) + Long.parseLong(entries[15]);
+
+    long delays = Long.parseLong(entries[24]);
     if(delays == 0) {
       return;
     }

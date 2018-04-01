@@ -23,10 +23,14 @@ public class DelayMapper extends Mapper<LongWritable, Text, DelayCompositeKey, M
     if(entries[0].equals("Year") || entries[14].equals("NA") || entries[15].equals("NA"))
       return;
 
+    long delays = Long.parseLong(entries[14]) + Long.parseLong(entries[15]);
+    if(delays < 0) {
+      delays = 0;
+    }
+
     int hour = formatHH(entries[5]);
     if(hour == 24)
       hour = 0;
-    long delays = Long.parseLong(entries[14]) + Long.parseLong(entries[15]);
     MeanWritable inter = new MeanWritable(1, delays);
 
     context.write(new DelayCompositeKey(DelayCompositeKey.TIME, hour), inter);
